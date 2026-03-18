@@ -26,6 +26,7 @@ const getPasswordError = () => {
   return ''
 }
 
+// ฟังก์ชันเช็ก Error ของ Password แบบรวมกับ Login Error
 const displayPasswordError = () => {
   if (loginError.value) return loginError.value
   if (formValidated.value && !password.value) return 'กรุณากรอก Password'
@@ -36,9 +37,7 @@ const displayPasswordError = () => {
 const handleLogin = () => {
   formValidated.value = true
   loginError.value = ''
-
   if (getEmailError() === '' && getPasswordError() === '') {
-
     if (email.value === MOCK_USER.email && password.value === MOCK_USER.password) {
       localStorage.setItem('userEmail', email.value)
       router.push('/home')
@@ -47,14 +46,12 @@ const handleLogin = () => {
     }
   }
 }
-
 </script>
 
 <template>
   <div style="width: 90vw; max-width: 400px; margin: 0 auto">
     <div class="card-body text-center">
       <form @submit.prevent="handleLogin" novalidate>
-
         <div class="mb-3 text-start">
           <label class="form-label mb-1">Email *</label>
           <input
@@ -73,7 +70,10 @@ const handleLogin = () => {
           <input
             v-model="password"
             type="password"
-            :class="['form-control', (formValidated && getPasswordError()) || loginError ? 'is-invalid' : '']"
+            :class="[
+              'form-control',
+              (formValidated && getPasswordError()) || loginError ? 'is-invalid' : '',
+            ]"
             placeholder="Password"
             @input="loginError = ''"
           />
