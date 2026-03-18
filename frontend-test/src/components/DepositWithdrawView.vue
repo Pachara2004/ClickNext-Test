@@ -1,6 +1,21 @@
+  /**
+  * =====================================================================
+  * @file            DepositWithdrawView.vue
+  * @since           2026-03-18
+  * @author          Pachara Paisrisakul
+  * ---------------------------------------------------------------------
+  * @description
+  *  - แสดงฟอร์มสำหรับผู้ใช้กรอกจำนวนเงินเพื่อทำรายการฝากหรือถอน
+  *  - มีการตรวจสอบความถูกต้องของข้อมูล เช่น จำนวนเงินต้องเป็นตัว
+  *    เลขระหว่าง 1 - 100,000 และไม่สามารถถอนเงินเกินยอดคงเหลือได้
+  *  - เมื่อผู้ใช้กดปุ่มฝากหรือถอนจะแสดง Modal ยืนยันการทำรายการ และเมื่อยืนยันแล้วจะเรียกฟังก์ชันใน store เพื่อบันทึกประวัติการทำรายการและอัปเดตยอดคงเหลือ
+  *
+  * =====================================================================
+  */
+
 <script setup>
 import { ref } from 'vue'
-import { useTransactionStore } from '@/stores/DepositWithdraw'
+import { useTransactionStore } from '@/stores/depositWithdraw'
 
 const store = useTransactionStore()
 const amount = ref(null)
@@ -10,7 +25,7 @@ const errorMessage = ref('')
 
 const validateAndConfirm = (type) => {
   errorMessage.value = ''
-  
+
   // ตรวจสอบเงื่อนไขตัวเลข 0-100,000
   if (!amount.value || amount.value <= 0 || amount.value > 100000) {
     errorMessage.value = 'กรุณากรอกจำนวนเงินระหว่าง 1 - 100,000 บาท'
